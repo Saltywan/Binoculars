@@ -7,3 +7,7 @@ gradio_client
 scikit-learn
 seaborn
 pandas
+peft
+accelerate
+auto-gptq
+optimum

@@ -1,4 +1,4 @@
-from demo.demo import app
+from demo.demo_th import app
 
 if __name__ == "__main__":
     # Launch the Gradio interface
