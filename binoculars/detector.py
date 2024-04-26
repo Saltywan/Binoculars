@@ -6,12 +6,11 @@ import transformers
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel, PeftConfig
 from peft import AutoPeftModelForCausalLM
-from config import huggingface_config
 from .utils import assert_tokenizer_consistency
 from .metrics import perplexity, entropy
 
 torch.set_grad_enabled(False)
-
+huggingface_config = {"TOKEN": None}
 # selected using Falcon-7B and Falcon-7B-Instruct at bfloat16
 BINOCULARS_ACCURACY_THRESHOLD = 0.9015310749276843  # optimized for f1-score
 BINOCULARS_FPR_THRESHOLD = 0.8536432310785527  # optimized for low-fpr [chosen at 0.01%]
