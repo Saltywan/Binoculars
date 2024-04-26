@@ -16,6 +16,10 @@ torch.set_grad_enabled(False)
 BINOCULARS_ACCURACY_THRESHOLD = 0.9015310749276843  # optimized for f1-score
 BINOCULARS_FPR_THRESHOLD = 0.8536432310785527  # optimized for low-fpr [chosen at 0.01%]
 
+BINOCULARS_ACCURACY_THRESHOLD_TH = 0.8319327731092436  # optimized for f1-score
+BINOCULARS_FPR_THRESHOLD_TH = 0.8319327731092436  # optimized for low-fpr
+
+
 DEVICE_1 = "cuda:0" if torch.cuda.is_available() else "cpu"
 DEVICE_2 = "cuda:1" if torch.cuda.device_count() > 1 else DEVICE_1
 
@@ -133,9 +137,9 @@ class Binoculars2(object):
 
     def change_mode(self, mode: str) -> None:
         if mode == "low-fpr":
-            self.threshold = BINOCULARS_FPR_THRESHOLD
+            self.threshold = BINOCULARS_FPR_THRESHOLD_TH
         elif mode == "accuracy":
-            self.threshold = BINOCULARS_ACCURACY_THRESHOLD
+            self.threshold = BINOCULARS_ACCURACY_THRESHOLD_TH
         else:
             raise ValueError(f"Invalid mode: {mode}")
         
@@ -206,9 +210,9 @@ class Binoculars3(object):
 
     def change_mode(self, mode: str) -> None:
         if mode == "low-fpr":
-            self.threshold = BINOCULARS_FPR_THRESHOLD
+            self.threshold = BINOCULARS_FPR_THRESHOLD_TH
         elif mode == "accuracy":
-            self.threshold = BINOCULARS_ACCURACY_THRESHOLD
+            self.threshold = BINOCULARS_ACCURACY_THRESHOLD_TH
         else:
             raise ValueError(f"Invalid mode: {mode}")
         
