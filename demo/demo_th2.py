@@ -3,15 +3,21 @@ __all__ = ["app"]
 import gradio as gr
 from binoculars import Binoculars3
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+import os
 
-model = AutoModelForCausalLM.from_pretrained("scb10x/llama-3-typhoon-v1.5-8b", device_map="auto", load_in_8bit=True)
-model1 = AutoModelForCausalLM.from_pretrained("scb10x/llama-3-typhoon-v1.5x-8b-instruct", device_map="auto", load_in_8bit=True)
+huggingface_config = {
+    # Only required for private models from Huggingface (e.g. LLaMA models)
+    "TOKEN": os.environ.get("HF_TOKEN", None)
+}
 
-BINO = Binoculars3(observer_name_or_path=model, performer_name_or_path=model1, name="scb10x/llama-3-typhoon-v1.5-8b")
+model = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3.1-8B", device_map="auto", load_in_8bit=True, token=huggingface_config["TOKEN"])
+model1 = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct", device_map="auto", load_in_8bit=True, token=huggingface_config["TOKEN"])
+
+BINO = Binoculars3(observer_name_or_path=model, performer_name_or_path=model1, name="meta-llama/Meta-Llama-3.1-8B")
 TOKENIZER = BINO.tokenizer
 MINIMUM_TOKENS = 64
-BINOCULARS_ACCURACY_THRESHOLD_TH = 0.9579831932773109  # optimized for f1-score
-BINOCULARS_FPR_THRESHOLD_TH = 0.7563025210084033  # optimized for low-fpr
+BINOCULARS_ACCURACY_THRESHOLD_TH = 0.8991596638655461  # optimized for f1-score
+BINOCULARS_FPR_THRESHOLD_TH = 0.7142857142857143  # optimized for low-fpr
 
 def count_tokens(text):
     return len(TOKENIZER(text).input_ids)
